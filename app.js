@@ -11,8 +11,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/home'));
+app.use('/students', require('./routes/students'));
 
-// Starts the server
 const PORT = 3004;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-
