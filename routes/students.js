@@ -11,11 +11,27 @@ router.get('/', (req, res) => {
 });
 
 router.get('/add', (req, res) => {
-    res.render('addStudent');
+    res.render('addStudent', { errors: {}, student: {} });
 });
 
 router.post('/add', (req, res) => {
     const { sid, name, age } = req.body;
+    const errors = {};
+
+    if (!sid || sid.length !== 4) {
+        errors.sid = 'Student ID should be 4 characters';
+    }
+    if (!name || name.length < 2) {
+        errors.name = 'Student Name should be at least 2 characters';
+    }
+    if (!age || age < 18) {
+        errors.age = 'Student Age should be at least 18';
+    }
+
+    if (Object.keys(errors).length > 0) {
+        return res.render('addStudent', { errors, student: { sid, name, age } });
+    }
+
     const sql = 'INSERT INTO student (sid, name, age) VALUES (?, ?, ?)';
     db.query(sql, [sid, name, age], (err) => {
         if (err) throw err;
@@ -23,7 +39,7 @@ router.post('/add', (req, res) => {
     });
 });
 
-router.get('/update/:sid', (req, res) => {
+router.get('/edit/:sid', (req, res) => {
     const { sid } = req.params;
     const sql = 'SELECT * FROM student WHERE sid = ?';
     db.query(sql, [sid], (err, results) => {
@@ -35,16 +51,16 @@ router.get('/update/:sid', (req, res) => {
     });
 });
 
-router.post('/update/:sid', (req, res) => {
+router.post('/edit/:sid', (req, res) => {
     const { sid } = req.params;
     const { name, age } = req.body;
     const errors = {};
 
     if (!name || name.length < 2) {
-        errors.name = 'Name must be at least 2 characters';
+        errors.name = 'Student Name should be at least 2 characters';
     }
     if (!age || age < 18) {
-        errors.age = 'Age must be 18 or older';
+        errors.age = 'Student Age should be at least 18';
     }
 
     if (Object.keys(errors).length > 0) {

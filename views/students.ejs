@@ -6,6 +6,7 @@
 <body>
     <h1>Students</h1>
     <p><a href="/students/add">Add Student</a></p>
+    <p><a href="/">Home</a></p>
     <table border="1">
         <thead>
             <tr>
@@ -22,7 +23,7 @@
                 <td><%= student.name %></td>
                 <td><%= student.age %></td>
                 <td>
-                    <a href="/students/update/<%= student.sid %>">Update</a>
+                    <a href="/students/edit/<%= student.sid %>">Update</a>
                 </td>
             </tr>
             <% }); %>

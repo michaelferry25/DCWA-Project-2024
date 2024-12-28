@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <a href="/">Home</a>
     <title>Update Student</title>
 </head>
 <body>
     <h1>Update Student</h1>
-    <form method="POST" action="/students/update/<%= student.sid %>">
+    
+    <form method="POST" action="/students/edit/<%= student.sid %>">
 
         <!--Prints out the selected students ID-->
-        <p>Student ID: <%= student.sid %></p>
+        <div>
+            <label>Student ID:</label>
+            <input type="text" value="<%= student.sid %>" readonly>
+        </div>
         
         <div>
             <!--Label for updating a students name-->
@@ -29,7 +34,7 @@
         </div>
 
         <!--Submit button for the form, updates any changes to the .sql file-->
-        <button type="submit">Update</button>
+        <button type="submit">Add</button>
 
     </form>
 
