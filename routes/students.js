@@ -23,4 +23,39 @@ router.post('/add', (req, res) => {
     });
 });
 
+router.get('/update/:sid', (req, res) => {
+    const { sid } = req.params;
+    const sql = 'SELECT * FROM student WHERE sid = ?';
+    db.query(sql, [sid], (err, results) => {
+        if (err) throw err;
+        if (results.length === 0) {
+            return res.status(404).send('Student not found');
+        }
+        res.render('updateStudent', { student: results[0], errors: {} });
+    });
+});
+
+router.post('/update/:sid', (req, res) => {
+    const { sid } = req.params;
+    const { name, age } = req.body;
+    const errors = {};
+
+    if (!name || name.length < 2) {
+        errors.name = 'Name must be at least 2 characters';
+    }
+    if (!age || age < 18) {
+        errors.age = 'Age must be 18 or older';
+    }
+
+    if (Object.keys(errors).length > 0) {
+        return res.render('updateStudent', { student: { sid, name, age }, errors });
+    }
+
+    const sql = 'UPDATE student SET name = ?, age = ? WHERE sid = ?';
+    db.query(sql, [name, age, sid], (err) => {
+        if (err) throw err;
+        res.redirect('/students');
+    });
+});
+
 module.exports = router;

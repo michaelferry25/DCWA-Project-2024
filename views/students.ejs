@@ -1,30 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Students</title>
 </head>
 <body>
     <h1>Students</h1>
-    <table>
+    <p><a href="/students/add">Add Student</a></p>
+    <table border="1">
         <thead>
             <tr>
                 <th>Student ID</th>
                 <th>Name</th>
                 <th>Age</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <% students.forEach(student => { %>
-                <tr>
-                    <td><%= student.sid %></td>
-                    <td><%= student.name %></td>
-                    <td><%= student.age %></td>
-                </tr>
-            <% }) %>
+            <tr>
+                <td><%= student.sid %></td>
+                <td><%= student.name %></td>
+                <td><%= student.age %></td>
+                <td>
+                    <a href="/students/update/<%= student.sid %>">Update</a>
+                </td>
+            </tr>
+            <% }); %>
         </tbody>
     </table>
-    <a href="/">Back to Home</a>
+    <p><a href="/">Back to Home</a></p>
 </body>
 </html>
