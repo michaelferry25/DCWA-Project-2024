@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
     `;
 
     //Executes the query for the grades
-    db.query(sql, (err, results) => {
+    db.db.query(sql, (err, results) => {
         if (err) throw err;
         
         //Renders the grades page with the data

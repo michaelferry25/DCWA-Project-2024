@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mysql = require('mysql');
 const path = require('path');
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', require('./routes/home'));
 app.use('/students', require('./routes/students'));
 app.use('/grades', require('./routes/grades'));
+app.use('/lecturers', require('./routes/lecturers'));
 
 //Starts the server
 const PORT = 3004;

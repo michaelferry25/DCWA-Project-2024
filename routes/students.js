@@ -5,7 +5,7 @@ const router = express.Router();
 // Route that displays all students
 router.get('/', (req, res) => {
     const sql = 'SELECT * FROM student ORDER BY sid';
-    db.query(sql, (err, results) => {
+    db.db.query(sql, (err, results) => {
         if (err) throw err;
         res.render('students', { students: results });
     });
@@ -39,7 +39,7 @@ router.post('/add', (req, res) => {
 
     // This is the sql query to insert a new student
     const sql = 'INSERT INTO student (sid, name, age) VALUES (?, ?, ?)';
-    db.query(sql, [sid, name, age], (err) => {
+    db.db.query(sql, [sid, name, age], (err) => {
         if (err) throw err;
         res.redirect('/students');
     });
@@ -51,7 +51,7 @@ router.get('/edit/:sid', (req, res) => {
 
     //sql query to fetch details of the student to be updated
     const sql = 'SELECT * FROM student WHERE sid = ?';
-    db.query(sql, [sid], (err, results) => {
+    db.db.query(sql, [sid], (err, results) => {
         if (err) throw err;
         //Checks if the query returned any results; if not, send a 404 error message that it couldnt find the student 
         if (results.length === 0) {
@@ -82,7 +82,7 @@ router.post('/edit/:sid', (req, res) => {
 
     //The sql query to update the student details
     const sql = 'UPDATE student SET name = ?, age = ? WHERE sid = ?';
-    db.query(sql, [name, age, sid], (err) => {
+    db.db.query(sql, [name, age, sid], (err) => {
         if (err) throw err;
         res.redirect('/students');
     });
